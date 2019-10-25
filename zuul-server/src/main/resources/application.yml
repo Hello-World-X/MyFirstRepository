@@ -1,0 +1,22 @@
+#默认会把所有注册在eureka上的微服务都反向代理
+server:
+  port: 8050
+spring:
+  application:
+    name: gateway-zuul
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://user:password123@localhost:8761/eureka
+zuul:
+  ignoredServices: '*'
+  routes:  # 路由
+    app-a:  # 唯一标识
+      path: /user/** #映射一个路径 /user/hello/{name} *下一层路径 **下层所有路径
+      serviceId: provider-user
+    app-sidecar:                  #通过sidecar调用nodejs的服务
+      path: /sidecar/**
+      serviceId: sidecar-server
+    
+
+
